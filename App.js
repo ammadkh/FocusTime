@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {Focus} from './src/pages/Focus';
-import {Text, SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {colors} from './src/utils/colors';
+import {Timer} from './src/pages/Timer';
 
 const App = () => {
-  const [focusSubject, setFocusSubject] = useState(null);
+  const [focusSubject, setFocusSubject] = useState('gardening');
   return (
     <SafeAreaView style={styles.container}>
       {focusSubject ? (
-        <Text>timer</Text>
+        <Timer focusSubject={focusSubject} />
       ) : (
         <Focus addSubject={setFocusSubject} />
       )}
