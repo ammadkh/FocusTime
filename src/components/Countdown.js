@@ -25,16 +25,19 @@ export const Countdown = ({minutes = 1, isPaused, onProgress, onEnd}) => {
   }, [minutes]);
 
   useEffect(() => {
-    if (isPaused) {
-      return;
-    }
-    interval.current = setInterval(countDown, 1000);
     onProgress(millis / convertMinsToMilli(minutes));
     if (!millis) {
       onEnd();
     }
+  }, [millis, onProgress, onEnd, minutes]);
+
+  useEffect(() => {
+    if (isPaused) {
+      return;
+    }
+    interval.current = setInterval(countDown, 1000);
     return () => clearInterval(interval.current);
-  }, [isPaused, millis, minutes, onEnd, onProgress]);
+  }, [isPaused]);
   return (
     <View>
       <Text style={styles.text}>{`${formatTime(mins)}: ${formatTime(

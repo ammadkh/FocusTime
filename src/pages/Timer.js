@@ -7,7 +7,7 @@ import {Timings} from '../components/Timings';
 import {colors} from '../utils/colors';
 import {spacing} from '../utils/sizes';
 
-export const Timer = ({focusSubject}) => {
+export const Timer = ({focusSubject, onTimerEnd, onClearSubject}) => {
   const [isStarted, setIsStarted] = useState(false);
   const [minutes, setMinutes] = useState(0.1);
   const [progress, setProgress] = useState(1);
@@ -26,11 +26,12 @@ export const Timer = ({focusSubject}) => {
       const vibrationInterval = setInterval(() => Vibration.vibrate(), 1000);
       setTimeout(() => clearInterval(vibrationInterval), 10000);
     } else {
-      Vibration.vibrate(10);
+      Vibration.vibrate(10000);
     }
-    setMinutes(1);
+    setMinutes(0.4);
     setProgress(1);
     setIsStarted(false);
+    onTimerEnd();
   };
   return (
     <View style={styles.container}>
@@ -62,6 +63,9 @@ export const Timer = ({focusSubject}) => {
           size={120}
           onPress={() => setIsStarted(prevValue => !prevValue)}
         />
+      </View>
+      <View style={styles.clearBtn}>
+        <RoundedButton title="-" onPress={onClearSubject} />
       </View>
     </View>
   );
@@ -100,5 +104,9 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  clearBtn: {
+    paddingLeft: spacing.md,
+    paddingBottom: spacing.lg,
   },
 });
